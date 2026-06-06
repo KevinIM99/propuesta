@@ -1,0 +1,183 @@
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .wrap {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 520px; padding: 2.5rem 1.5rem; gap: 1.2rem; text-align: center;
+    background: linear-gradient(160deg,#fbeaf0 0%,#f9d9e7 40%,#faeeda 100%);
+    border-radius: 20px; position: relative; overflow: hidden;
+    font-family: 'Georgia', serif;
+  }
+  .petal { position:absolute; pointer-events:none; opacity:0; animation:fall linear infinite; }
+  @keyframes fall {
+    0%   { opacity:.7; transform:translateY(-30px) rotate(0deg); }
+    100% { opacity:0;  transform:translateY(580px) rotate(360deg); }
+  }
+  .icon-ring {
+    width:88px; height:88px; border-radius:50%;
+    background:linear-gradient(135deg,#f4c0d1,#ed93b1);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 0 10px rgba(244,192,209,.25), 0 0 0 20px rgba(244,192,209,.10);
+    animation:heartbeat 1.8s ease-in-out infinite; flex-shrink:0;
+  }
+  @keyframes heartbeat {
+    0%,100%{transform:scale(1);} 14%{transform:scale(1.12);} 28%{transform:scale(1);} 42%{transform:scale(1.07);}
+  }
+  .icon-ring svg { width:44px; height:44px; fill:#fff; }
+  .divider { width:56px; height:2px; border-radius:2px; background:linear-gradient(90deg,transparent,#e07a9a,transparent); }
+  .title { font-size:clamp(1.2rem,5vw,1.5rem); font-weight:500; color:#8b1a4a; line-height:1.3; }
+  .sub   { font-size:clamp(.82rem,3vw,.92rem); color:#b05470; line-height:1.75; font-family:sans-serif; font-weight:300; margin-top:.5rem; }
+  .btn-row { display:flex; flex-direction:column; gap:12px; width:100%; max-width:280px; }
+  .btn {
+    width:100%; border-radius:50px; cursor:pointer; border:none;
+    -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+    transition: font-size .35s ease, padding .35s ease, opacity .5s ease, box-shadow .3s ease;
+    font-family: sans-serif; letter-spacing:.3px;
+  }
+  .btn-si {
+    font-size:16px; padding:15px 20px; font-weight:500;
+    background:linear-gradient(135deg,#d4537e,#e07aa0);
+    color:#fff; box-shadow:0 6px 20px rgba(212,83,126,.3);
+  }
+  .btn-no {
+    font-size:16px; padding:15px 20px; font-weight:400;
+    background:#fff; color:#d4537e;
+    border:1.5px solid #f4c0d1; box-shadow:0 2px 10px rgba(244,192,209,.3);
+  }
+  .hint { font-size:12px; color:#c4809a; font-style:italic; min-height:18px; transition:opacity .3s; font-family:sans-serif; }
+  .yes-wrap { display:none; flex-direction:column; align-items:center; gap:1rem; animation:fadeIn .6s ease; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+  .yes-title { font-size:clamp(1.2rem,5vw,1.5rem); color:#8b1a4a; }
+  .yes-sub   { font-size:13px; color:#b05470; line-height:1.7; font-family:sans-serif; font-weight:300; }
+  .yes-icons { font-size:1.6rem; margin-top:.2rem; }
+  .floater {
+    position:fixed; pointer-events:none; font-size:1.5rem;
+    animation:rise 2.2s ease-out forwards; z-index:99;
+  }
+  @keyframes rise {
+    0%  {opacity:1;transform:translateY(0) scale(1);}
+    100%{opacity:0;transform:translateY(-160px) scale(.4);}
+  }
+</style>
+
+<div class="wrap" id="wrap">
+  <span class="petal" style="left:5%;animation-duration:7s;animation-delay:0s;">🌸</span>
+  <span class="petal" style="left:20%;animation-duration:9s;animation-delay:1.4s;">🌷</span>
+  <span class="petal" style="left:38%;animation-duration:8s;animation-delay:2.8s;">💮</span>
+  <span class="petal" style="left:55%;animation-duration:10s;animation-delay:.7s;">🌸</span>
+  <span class="petal" style="left:70%;animation-duration:7.5s;animation-delay:3.9s;">🌷</span>
+  <span class="petal" style="left:85%;animation-duration:8.5s;animation-delay:2s;">💮</span>
+
+  <div class="icon-ring" id="main-icon">
+    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53L12 21.35z"/></svg>
+  </div>
+
+  <div class="divider"></div>
+
+  <div>
+    <p class="title" id="main-title">¿Quieres ser mi novia?</p>
+    <p class="sub" id="main-sub">He estado pensando mucho en esto...<br>y creo que eres muy especial para mí 🌹</p>
+  </div>
+
+  <div class="btn-row" id="btn-row">
+    <button class="btn btn-si" id="btn-si">💖 Sí, quiero</button>
+    <button class="btn btn-no" id="btn-no">🙈 No</button>
+  </div>
+
+  <p class="hint" id="hint">Toca el botón que quieras...</p>
+
+  <div class="yes-wrap" id="yes-wrap">
+    <div class="icon-ring" style="background:linear-gradient(135deg,#e07aa0,#f4a0c0);">
+      <svg viewBox="0 0 24 24" style="width:44px;height:44px;fill:#fff;"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53L12 21.35z"/></svg>
+    </div>
+    <p class="yes-title">¡Sabía que dirías sí! 🎀</p>
+    <p class="yes-sub">Eres la persona más increíble<br>del mundo entero 💕</p>
+    <div class="yes-icons">💗 🌹 ✨ 🌹 💗</div>
+  </div>
+</div>
+
+<script>
+  const si   = document.getElementById('btn-si');
+  const no   = document.getElementById('btn-no');
+  const hint = document.getElementById('hint');
+
+  let tries   = 0;
+  let siSize  = 16, siPad = 15;
+  let noSize  = 16, noPad = 15;
+  const maxTries = 6;
+
+  const hints = [
+    '¿Estás segura? 😏',
+    'El "Sí" está creciendo de esperanza...',
+    'El "No" se va encogiendo...',
+    'Ya casi no se ve el "No" 🌷',
+    'Una oportunidad más de reconsiderar...',
+    'Solo queda una opción 💕',
+  ];
+
+  function spawnFloater(x, y) {
+    const pool = ['💗','🌸','🌷','✨','💮','🎀'];
+    const el = document.createElement('span');
+    el.className = 'floater';
+    el.textContent = pool[Math.floor(Math.random() * pool.length)];
+    el.style.left = (x - 14) + 'px';
+    el.style.top  = (y - 14) + 'px';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 2400);
+  }
+
+  function handleNo(e) {
+    if (tries >= maxTries) return;
+    const r = no.getBoundingClientRect();
+    spawnFloater(r.left + r.width / 2, r.top + r.height / 2);
+    tries++;
+
+    // SI crece
+    siSize = Math.min(siSize + 3.5, 32);
+    siPad  = Math.min(siPad  + 5,   46);
+    si.style.fontSize = siSize + 'px';
+    si.style.padding  = siPad  + 'px';
+    si.style.boxShadow = '0 8px 28px rgba(212,83,126,' + Math.min(.3 + tries * .08, .7) + ')';
+
+    // NO se encoge
+    noSize = Math.max(noSize - 2.5, 7);
+    noPad  = Math.max(noPad  - 2.5, 4);
+    no.style.fontSize = noSize + 'px';
+    no.style.padding  = noPad  + 'px';
+    no.style.opacity  = String(Math.max(1 - tries * .15, 0));
+
+    hint.textContent = hints[Math.min(tries - 1, hints.length - 1)];
+
+    if (tries >= maxTries) {
+      no.style.opacity       = '0';
+      no.style.pointerEvents = 'none';
+      hint.style.opacity     = '0';
+      setTimeout(() => { no.style.display = 'none'; }, 600);
+    }
+  }
+
+  no.addEventListener('click', handleNo);
+  no.addEventListener('touchstart', function(e) { e.preventDefault(); handleNo(e); }, { passive: false });
+
+  function handleYes() {
+    if (document.getElementById('yes-wrap').style.display === 'flex') return;
+    document.getElementById('btn-row').style.display    = 'none';
+    hint.style.display                                   = 'none';
+    document.getElementById('main-sub').style.display   = 'none';
+    document.getElementById('main-title').style.display = 'none';
+    document.getElementById('main-icon').style.display  = 'none';
+    document.querySelector('.divider').style.display    = 'none';
+    document.getElementById('yes-wrap').style.display   = 'flex';
+    for (let i = 0; i < 16; i++) {
+      setTimeout(() => {
+        spawnFloater(
+          60  + Math.random() * (window.innerWidth  - 120),
+          80  + Math.random() * (window.innerHeight - 180)
+        );
+      }, i * 140);
+    }
+  }
+
+  si.addEventListener('click', handleYes);
+  si.addEventListener('touchend', function(e) { e.preventDefault(); handleYes(); }, { passive: false });
+</script>
