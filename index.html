@@ -1,72 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Una pregunta especial 💕</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  .wrap {
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    min-height: 520px; padding: 2.5rem 1.5rem; gap: 1.2rem; text-align: center;
-    background: linear-gradient(160deg,#fbeaf0 0%,#f9d9e7 40%,#faeeda 100%);
-    border-radius: 20px; position: relative; overflow: hidden;
-    font-family: 'Georgia', serif;
-  }
-  .petal { position:absolute; pointer-events:none; opacity:0; animation:fall linear infinite; }
-  @keyframes fall {
-    0%   { opacity:.7; transform:translateY(-30px) rotate(0deg); }
-    100% { opacity:0;  transform:translateY(580px) rotate(360deg); }
-  }
-  .icon-ring {
-    width:88px; height:88px; border-radius:50%;
-    background:linear-gradient(135deg,#f4c0d1,#ed93b1);
-    display:flex; align-items:center; justify-content:center;
-    box-shadow:0 0 0 10px rgba(244,192,209,.25), 0 0 0 20px rgba(244,192,209,.10);
-    animation:heartbeat 1.8s ease-in-out infinite; flex-shrink:0;
-  }
-  @keyframes heartbeat {
-    0%,100%{transform:scale(1);} 14%{transform:scale(1.12);} 28%{transform:scale(1);} 42%{transform:scale(1.07);}
-  }
-  .icon-ring svg { width:44px; height:44px; fill:#fff; }
-  .divider { width:56px; height:2px; border-radius:2px; background:linear-gradient(90deg,transparent,#e07a9a,transparent); }
-  .title { font-size:clamp(1.2rem,5vw,1.5rem); font-weight:500; color:#8b1a4a; line-height:1.3; }
-  .sub   { font-size:clamp(.82rem,3vw,.92rem); color:#b05470; line-height:1.75; font-family:sans-serif; font-weight:300; margin-top:.5rem; }
-  .btn-row { display:flex; flex-direction:column; gap:12px; width:100%; max-width:280px; }
-  .btn {
-    width:100%; border-radius:50px; cursor:pointer; border:none;
-    -webkit-tap-highlight-color:transparent; touch-action:manipulation;
-    transition: font-size .35s ease, padding .35s ease, opacity .5s ease, box-shadow .3s ease;
-    font-family: sans-serif; letter-spacing:.3px;
-  } 
-  .btn-si {
-    font-size:16px; padding:15px 20px; font-weight:500;
-    background:linear-gradient(135deg,#d4537e,#e07aa0);
-    color:#fff; box-shadow:0 6px 20px rgba(212,83,126,.3);
-  }
-  .btn-no {
-    font-size:16px; padding:15px 20px; font-weight:400;
-    background:#fff; color:#d4537e;
-    border:1.5px solid #f4c0d1; box-shadow:0 2px 10px rgba(244,192,209,.3);
-  }
-  .hint { font-size:12px; color:#c4809a; font-style:italic; min-height:18px; transition:opacity .3s; font-family:sans-serif; }
-  .yes-wrap { display:none; flex-direction:column; align-items:center; gap:1rem; animation:fadeIn .6s ease; }
-  @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
-  .yes-title { font-size:clamp(1.2rem,5vw,1.5rem); color:#8b1a4a; }
-  .yes-sub   { font-size:13px; color:#b05470; line-height:1.7; font-family:sans-serif; font-weight:300; }
-  .yes-icons { font-size:1.6rem; margin-top:.2rem; }
-  .floater {
-    position:fixed; pointer-events:none; font-size:1.5rem;
-    animation:rise 2.2s ease-out forwards; z-index:99;
-  }
-  @keyframes rise {
-    0%  {opacity:1;transform:translateY(0) scale(1);}
-    100%{opacity:0;transform:translateY(-160px) scale(.4);}
-  }
-</style>
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background: #1a0510;
+    }
 
-<div class="wrap" id="wrap">
-  <span class="petal" style="left:5%;animation-duration:7s;animation-delay:0s;">🌸</span>
-  <span class="petal" style="left:20%;animation-duration:9s;animation-delay:1.4s;">🌷</span>
-  <span class="petal" style="left:38%;animation-duration:8s;animation-delay:2.8s;">💮</span>
-  <span class="petal" style="left:55%;animation-duration:10s;animation-delay:.7s;">🌸</span>
-  <span class="petal" style="left:70%;animation-duration:7.5s;animation-delay:3.9s;">🌷</span>
-  <span class="petal" style="left:85%;animation-duration:8.5s;animation-delay:2s;">💮</span>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      font-family: 'Lato', sans-serif;
+      touch-action: none;
+    }
+
+    /* ── Slideshow de fondo ── */
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+    .bg-slide {
+      position: absolute;
+      inset: 0;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: left center;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+    .bg-slide.active { opacity: .75; }
+    .bg-overlay {
+      position: absolute;
+      inset: 0;
+      /* gradiente suave + capa semitransparente para oscurecer imágenes de fondo */
+      background:
+        linear-gradient(
+          to right,
+          rgba(20, 0, 12, 0.425) 0%,
+          rgba(20,0,12,.15) 55%,
+          rgba(77, 0, 46, 0.75) 75%,
+          rgba(20,0,12,.92) 100%
+        ),
+        linear-gradient(to right, rgba(0,0,0,0.25), rgba(0,0,0,0.45));
+      z-index: 1;
+    }
+
+    /* ── Pétalos ── */
+    .petal {
+      position: fixed;
+      font-size: clamp(1rem, 3vw, 1.4rem);
+      pointer-events: none;
+      opacity: 0;
+      animation: fall linear infinite;
+      z-index: 2;
+    }
+    @keyframes fall {
+      0%   { opacity: .7; transform: translateY(-40px) rotate(0deg); }
+      100% { opacity: 0;  transform: translateY(110vh) rotate(400deg); }
+    }
+
+    /* ── Tarjeta (derecha) ── */
+    .card {
+      position: relative;
+      z-index: 10;
+      background: rgba(255,255,255,.10);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,180,200,.35);
+      border-radius: 28px;
+      padding: clamp(1.6rem,5vw,2.5rem) clamp(1.2rem,4vw,2rem);
+      width: min(88vw, 340px);
+      margin-right: clamp(12px, 4vw, 40px);
+      text-align: center;
+      box-shadow:
+        0 2px 0 rgba(255,255,255,.12) inset,
+        0 20px 60px rgba(0,0,0,.55),
+        0 0 40px rgba(212,83,126,.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* ── Ícono ── */
+    .icon-ring {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: linear-gradient(135deg, #d4537e, #f06090);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 0 8px rgba(212,83,126,.2), 0 0 0 16px rgba(212,83,126,.08);
+      animation: heartbeat 1.8s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes heartbeat {
+      0%,100%{transform:scale(1);} 14%{transform:scale(1.12);} 28%{transform:scale(1);} 42%{transform:scale(1.07);}    }
+    .icon-ring svg { width: 40px; height: 40px; fill: #fff; }
+
+    .divider {
+      width: 50px; height: 2px; border-radius: 2px;
+      background: linear-gradient(90deg, transparent, rgba(255,180,200,.7), transparent);
+    }
+
+    .title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 4.5vw, 1.4rem);
+      font-weight: 500;
+      color: #fff;
+      line-height: 1.3;
+      text-shadow: 0 2px 12px rgba(0,0,0,.6);
+    }
+    .sub {
+      font-size: clamp(.78rem, 3vw, .88rem);
+      color: rgba(255,210,220,.85);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ── Botones ── */
+    .btn-row { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+    .btn {
+      width: 100%; border-radius: 50px;
+      cursor: pointer; border: none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      transition: font-size .35s ease, padding .35s ease, opacity .5s ease, box-shadow .3s ease;
+      font-family: 'Lato', sans-serif; letter-spacing: .3px;
+    }
+    .btn-si {
+      font-size: 16px; padding: 14px 20px; font-weight: 500;
+      background: linear-gradient(135deg, #d4537e, #e07aa0);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(212,83,126,.5);
+    }
+    .btn-si:active { transform: scale(.97); }
+    .btn-no {
+      font-size: 16px; padding: 14px 20px; font-weight: 400;
+      background: rgba(255,255,255,.12);
+      color: rgba(255,200,210,.9);
+      border: 1.5px solid rgba(255,180,200,.4);
+      box-shadow: 0 2px 10px rgba(0,0,0,.2);
+    }
+
+    .hint { font-size: 12px; color: rgba(255,200,215,.6); font-style: italic; min-height: 18px; transition: opacity .3s; font-family: 'Lato', sans-serif; }
+
+    .yes-wrap { display: none; flex-direction: column; align-items: center; gap: .9rem; animation: fadeIn .6s ease; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+    .yes-title { font-family: 'Playfair Display', serif; font-size: clamp(1.1rem,4.5vw,1.4rem); color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,.5); }
+    .yes-sub { font-size: 13px; color: rgba(255,210,220,.8); line-height: 1.7; font-weight: 300; }
+    .yes-icons { font-size: 1.5rem; margin-top: .1rem; }
+
+    .floater { position: fixed; pointer-events: none; font-size: 1.5rem; animation: rise 2.2s ease-out forwards; z-index: 99; }
+    @keyframes rise { 0%{opacity:1;transform:translateY(0) scale(1);} 100%{opacity:0;transform:translateY(-160px) scale(.4);} }
+  </style>
+</head>
+<body>
+
+<div class="bg">
+  <div class="bg-slide active" id="slide0" style="background-image:url('foto1.webp')"></div>
+  <div class="bg-slide"        id="slide1" style="background-image:url('foto2.webp')"></div>
+  <div class="bg-slide"        id="slide2" style="background-image:url('foto3.webp')"></div>
+  <div class="bg-overlay"></div>
+</div>
+
+<span class="petal" style="left:5%;animation-duration:7s;animation-delay:0s;">🌸</span>
+<span class="petal" style="left:20%;animation-duration:9s;animation-delay:1.4s;">🌷</span>
+<span class="petal" style="left:38%;animation-duration:8s;animation-delay:2.8s;">💮</span>
+<span class="petal" style="left:55%;animation-duration:10s;animation-delay:.7s;">🌸</span>
+<span class="petal" style="left:70%;animation-duration:7.5s;animation-delay:3.9s;">🌷</span>
+<span class="petal" style="left:85%;animation-duration:8.5s;animation-delay:2s;">💮</span>
+
+<div class="card" id="main-card">
 
   <div class="icon-ring" id="main-icon">
     <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53L12 21.35z"/></svg>
@@ -75,8 +188,8 @@
   <div class="divider"></div>
 
   <div>
-    <p class="title" id="main-title">Mariana ¿Quieres ser mi novia?</p>
-    <p class="sub" id="main-sub">He estado pensando mucho en esto...<br>y creo que eres muy especial para mí 🌹</p>
+    <p class="title" id="main-title">¿Quieres ser mi novia?</p>
+    <p class="sub" id="main-sub" style="margin-top:.5rem;">He estado pensando mucho en esto...<br>y creo que eres muy especial para mí 🌹</p>
   </div>
 
   <div class="btn-row" id="btn-row">
@@ -88,7 +201,7 @@
 
   <div class="yes-wrap" id="yes-wrap">
     <div class="icon-ring" style="background:linear-gradient(135deg,#e07aa0,#f4a0c0);">
-      <svg viewBox="0 0 24 24" style="width:44px;height:44px;fill:#fff;"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53L12 21.35z"/></svg>
+      <svg viewBox="0 0 24 24" style="width:40px;height:40px;fill:#fff;"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53L12 21.35z"/></svg>
     </div>
     <p class="yes-title">¡Sabía que dirías sí! 🎀</p>
     <p class="yes-sub">Eres la persona más increíble<br>del mundo entero 💕</p>
@@ -97,22 +210,32 @@
 </div>
 
 <script>
+  /* ── Slideshow ── */
+  const slides = document.querySelectorAll('.bg-slide');
+  let current = 0;
+  setInterval(() => {
+    slides[current].classList.remove('active');
+    current = (current + 1) % slides.length;
+    slides[current].classList.add('active');
+  }, 2000);
+
+  /* ── Botones ── */
   const si   = document.getElementById('btn-si');
   const no   = document.getElementById('btn-no');
   const hint = document.getElementById('hint');
 
-  let tries   = 0;
-  let siSize  = 16, siPad = 15;
-  let noSize  = 16, noPad = 15;
+  let tries = 0;
+  let siSize = 16, siPad = 14;
+  let noSize = 16, noPad = 14;
   const maxTries = 6;
 
   const hints = [
-    '¿Estás segura? 😏',
-    'El "Sí" está creciendo de esperanza...',
-    'El "No" se va encogiendo...',
-    'Ya casi no se ve el "No" 🌷',
-    'Una oportunidad más de reconsiderar...',
-    'Solo queda una opción 💕',
+    'Ese botón no te conviene... 😏',
+    'El "No" se encoge de vergüenza...',
+    'El "Sí" crece de esperanza 🌷',
+    'Ya casi desaparece el "No"...',
+    'Una oportunidad más...',
+    'Parece que solo queda una opción 💕',
   ];
 
   function spawnFloater(x, y) {
@@ -132,16 +255,16 @@
     spawnFloater(r.left + r.width / 2, r.top + r.height / 2);
     tries++;
 
-    // SI crece
+    /* SI crece */
     siSize = Math.min(siSize + 3.5, 32);
-    siPad  = Math.min(siPad  + 5,   46);
+    siPad  = Math.min(siPad  + 4,   44);
     si.style.fontSize = siSize + 'px';
     si.style.padding  = siPad  + 'px';
-    si.style.boxShadow = '0 8px 28px rgba(212,83,126,' + Math.min(.3 + tries * .08, .7) + ')';
+    si.style.boxShadow = '0 8px 28px rgba(212,83,126,' + Math.min(.5 + tries * .08, .85) + ')';
 
-    // NO se encoge
+    /* NO se encoge */
     noSize = Math.max(noSize - 2.5, 7);
-    noPad  = Math.max(noPad  - 2.5, 4);
+    noPad  = Math.max(noPad  - 2,   3);
     no.style.fontSize = noSize + 'px';
     no.style.padding  = noPad  + 'px';
     no.style.opacity  = String(Math.max(1 - tries * .15, 0));
@@ -149,10 +272,8 @@
     hint.textContent = hints[Math.min(tries - 1, hints.length - 1)];
 
     if (tries >= maxTries) {
-      no.style.opacity       = '0';
-      no.style.pointerEvents = 'none';
-      hint.style.opacity     = '0';
-      setTimeout(() => { no.style.display = 'none'; }, 600);
+      no.style.opacity = '0'; no.style.pointerEvents = 'none'; hint.style.opacity = '0';
+      setTimeout(() => { no.style.display = 'none'; }, 700);
     }
   }
 
@@ -161,13 +282,13 @@
 
   function handleYes() {
     if (document.getElementById('yes-wrap').style.display === 'flex') return;
-    document.getElementById('btn-row').style.display    = 'none';
-    hint.style.display                                   = 'none';
-    document.getElementById('main-sub').style.display   = 'none';
-    document.getElementById('main-title').style.display = 'none';
-    document.getElementById('main-icon').style.display  = 'none';
-    document.querySelector('.divider').style.display    = 'none';
-    document.getElementById('yes-wrap').style.display   = 'flex';
+    document.getElementById('btn-row').style.display   = 'none';
+    hint.style.display                                  = 'none';
+    document.getElementById('main-sub').style.display  = 'none';
+    document.getElementById('main-title').style.display= 'none';
+    document.getElementById('main-icon').style.display = 'none';
+    document.querySelector('.divider').style.display   = 'none';
+    document.getElementById('yes-wrap').style.display  = 'flex';
     for (let i = 0; i < 16; i++) {
       setTimeout(() => {
         spawnFloater(
@@ -181,3 +302,5 @@
   si.addEventListener('click', handleYes);
   si.addEventListener('touchend', function(e) { e.preventDefault(); handleYes(); }, { passive: false });
 </script>
+</body>
+</html>
